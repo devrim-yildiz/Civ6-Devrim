@@ -2,17 +2,17 @@
 <Project ToolsVersion="12.0" DefaultTargets="Default" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Default</Configuration>
-    <Name>MC_MasterTemplate</Name>
+    <Name>Devrims_Ministerium</Name>
     <Guid>8c6472be-9b71-4608-b804-b4918e1eaddc</Guid>
     <ProjectGuid>f1d6e542-03ea-4e6d-bab2-6e3bc6353dda</ProjectGuid>
     <ModVersion>2</ModVersion>
-    <Teaser>Introduces the CIVILIZATION_NAME to Civilization VI.</Teaser>
-    <Description>Introduces the CIVILIZATION_NAME to Civilization VI.
+    <Teaser>Introduces Devrims Ministerium für Mehr Produktion to Civilization VI.</Teaser>
+    <Description>Introduces Devrims Ministerium für Mehr Produktion to Civilization VI.
 
-[NEWLINE][NEWLINE]Lead them to glory with LEADERNAME as your leader.
+[NEWLINE][NEWLINE]Lead them to glory with Devrim der Visionär as your leader.
 
-[NEWLINE][NEWLINE]Harness the fearsome UNIQUE_UNIT_NAME Unique Unit, alongside the UNIQUE_INFRASTRUCTURE_NAME Unique Improvement.</Description>
-    <Authors>maconnolly</Authors>
+[NEWLINE][NEWLINE]In Devrims Ministerium, knowledge flows like electricity through gears and factories. Build the unique Quantum-Fabrik building for production synergies and deploy the fearsome Mechanisierte Elite for industrial warfare.</Description>
+    <Authors>Devrim</Authors>
     <SpecialThanks>
     </SpecialThanks>
     <AffectsSavedGames>false</AffectsSavedGames>
@@ -27,7 +27,7 @@
     <AssemblyName>Keniisus_Civ_Template</AssemblyName>
     <RootNamespace>Keniisus_Civ_Template</RootNamespace>
     <FrontEndActionData><![CDATA[<FrontEndActions><UpdateDatabase id="NewAction"><File>Leader/Leader_Config.sql</File></UpdateDatabase><UpdateText id="NewAction"><File>Core/Civilization_Localisation.sql</File><File>Leader/Leader_Localisation.sql</File></UpdateText><UpdateColors id="NewAction"><File>Core/Civilization_Colors.sql</File><File>Leader/Leader_Colors.sql</File></UpdateColors><UpdateArt id="NewAction"><File>(Mod Art Dependency File)</File></UpdateArt><UpdateIcons id="UpdateIcons"><File>Core/NewIcons.sql</File></UpdateIcons></FrontEndActions>]]></FrontEndActionData>
-    <InGameActionData><![CDATA[<InGameActions><UpdateDatabase id="NewAction"><File>Core/Civilization_Config.sql</File><File>Leader/Leader_Core.sql</File><File>Core/Civilization_UA.sql</File><File>Core/Civilization_UI.sql</File><File>Core/Civilization_UU.sql</File><File>Leader/Leader_UA.sql</File><File>Leader/Leader_Agenda.sql</File><File>Leader/Leader_Screens.sql</File><File>Core/Civilization_HistoricMoments.sql</File></UpdateDatabase><UpdateColors id="NewAction"><File>Core/Civilization_Colors.sql</File><File>Leader/Leader_Colors.sql</File></UpdateColors><UpdateText id="NewAction"><File>Core/Civilization_Localisation.sql</File><File>Leader/Leader_Localisation.sql</File></UpdateText><UpdateIcons id="NewIcons"><File>Core/NewIcons.sql</File></UpdateIcons><UpdateArt id="NewAction"><File>(Mod Art Dependency File)</File></UpdateArt></InGameActions>]]></InGameActionData>
+    <InGameActionData><![CDATA[<InGameActions><UpdateDatabase id="NewAction"><File>Core/Civilization_Config.sql</File><File>Leader/Leader_Core.sql</File><File>Core/Civilization_UA.sql</File><File>Core/Civilization_UD.sql</File><File>Core/Civilization_UI.sql</File><File>Core/Civilization_UU.sql</File><File>Leader/Leader_UA.sql</File><File>Leader/Leader_Agenda.sql</File><File>Leader/Leader_Screens.sql</File><File>Core/Civilization_HistoricMoments.sql</File></UpdateDatabase><UpdateColors id="NewAction"><File>Core/Civilization_Colors.sql</File><File>Leader/Leader_Colors.sql</File></UpdateColors><UpdateText id="NewAction"><File>Core/Civilization_Localisation.sql</File><File>Leader/Leader_Localisation.sql</File></UpdateText><UpdateIcons id="NewIcons"><File>Core/NewIcons.sql</File></UpdateIcons><UpdateArt id="NewAction"><File>(Mod Art Dependency File)</File></UpdateArt></InGameActions>]]></InGameActionData>
     <ActionCriteriaData><![CDATA[<ActionCriteria><Criteria id="Expansion1"><GameModeInUse><GameCoreInUse>Expansion1</GameCoreInUse></GameModeInUse></Criteria></ActionCriteria>]]></ActionCriteriaData>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Default' ">
@@ -67,6 +67,9 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="Core\Civilization_UA.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Core\Civilization_UD.sql">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Core\Civilization_UI.sql">
