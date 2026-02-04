@@ -129,8 +129,8 @@ VALUES		('REQSET_DEVRIM_AGENDA_UNHAPPY',	'REQUIREMENTSET_TEST_ALL'	),
 -----------------------------------------------
 -- RequirementSetRequirements
 
--- UNHAPPY: Low production (uses low gold as proxy for weak economy)
--- HAPPY: High production AND high science (uses high gold and high science)
+-- UNHAPPY: Low economy (approximated using low gold metrics since production tracking is not available)
+-- HAPPY: High production AND high science (approximated using high gold and high science metrics)
 -----------------------------------------------
 
 INSERT INTO RequirementSetRequirements
