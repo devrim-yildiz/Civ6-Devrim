@@ -59,7 +59,7 @@ VALUES
 
 	('en_US',	'LOC_UNIT_DEVRIM_MECHANISIERTE_ELITE_NAME',	'Mechanisierte Elite'	),
 	('en_US',	'LOC_UNIT_DEVRIM_MECHANISIERTE_ELITE_DESCRIPTION',	 
-	'An elite industrial warfare unit unique to Devrims Ministerium. Replaces Pike and Shot.[NEWLINE][NEWLINE]Built 25% faster in cities with a Quantum-Fabrik. When completed, grants +20 [ICON_Production] Production to the city. Gains +3 [ICON_Strength] Combat Strength bonus representing industrial synergy. Defeating an enemy unit grants +5 [ICON_Science] Science to the city.'	),
+	'An elite industrial warfare unit unique to Devrims Ministerium. Replaces Pike and Shot.[NEWLINE][NEWLINE]Built 25% faster in cities with a Quantum-Fabrik. Gains +3 [ICON_Strength] Combat Strength bonus representing industrial synergy. Defeating an enemy unit grants +5 [ICON_Science] Science to the city.'	),
 
 	('en_US',	'LOC_ABILITY_DEVRIM_MECHANISIERTE_ELITE',  '+3 [ICON_Strength] Combat Strength from industrial synergy.'	),
 	('en_US',	'LOC_ABILITY_DEVRIM_MECH_ELITE_SCIENCE_KILL',  '+5 [ICON_Science] Science when defeating an enemy unit.'	),

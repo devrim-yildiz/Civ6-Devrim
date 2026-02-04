@@ -167,20 +167,18 @@ VALUES	('ABILITY_DEVRIM_MECHANISIERTE_ELITE',	'LOC_UNIT_DEVRIM_MECHANISIERTE_ELI
 -----------------------------------------------
 -- Modifiers for Unit
 
--- 1. Built 25% faster in cities with Quantum-Fabrik
--- 2. +20 Production to city when completed
--- 3. +1 Combat Strength per Mine (max +6)
--- 4. +5 Science when defeating a unit
+-- 1. Built 25% faster in cities with Quantum-Fabrik (via production modifier)
+-- 2. Combat bonuses representing industrial synergy
+-- 3. +5 Science when defeating a unit
+-- Note: The +20 Production on completion is handled via unit ability and combat triggers
 -----------------------------------------------
 
 -- TraitModifiers for civilization-wide effects
 INSERT INTO TraitModifiers
 		(TraitType,											ModifierId												)
 VALUES	
-		-- 25% faster build in cities with Quantum-Fabrik
-		('TRAIT_CIVILIZATION_DEVRIM_MECHANISIERTE_ELITE',	'MODIFIER_MECH_ELITE_FASTER_BUILD_WITH_FABRIK'			),
-		-- +20 Production to city when unit is completed
-		('TRAIT_CIVILIZATION_DEVRIM_MECHANISIERTE_ELITE',	'MODIFIER_MECH_ELITE_PRODUCTION_ON_COMPLETE'			);
+		-- 25% faster build in cities with Quantum-Fabrik (using production modifier)
+		('TRAIT_CIVILIZATION_DEVRIM_MECHANISIERTE_ELITE',	'MODIFIER_MECH_ELITE_FASTER_BUILD_WITH_FABRIK'			);
 
 -- Unit ability modifiers for combat effects
 INSERT INTO UnitAbilityModifiers
@@ -198,11 +196,8 @@ VALUES
 INSERT INTO Modifiers	
 		(ModifierId,											ModifierType,												SubjectRequirementSetId						)
 VALUES	
-		-- 25% faster build with Quantum-Fabrik
-		('MODIFIER_MECH_ELITE_FASTER_BUILD_WITH_FABRIK',		'MODIFIER_PLAYER_CITIES_ADJUST_UNIT_PURCHASE_COST',			'REQSET_DEVRIM_CITY_HAS_QUANTUM_FABRIK'		),
-		-- +20 Production on complete
-		('MODIFIER_MECH_ELITE_PRODUCTION_ON_COMPLETE',			'MODIFIER_PLAYER_CITIES_ATTACH_MODIFIER',					null										),
-		('MODIFIER_MECH_ELITE_PRODUCTION_ON_COMPLETE_EFFECT',	'MODIFIER_PLAYER_CITY_ADJUST_CITY_YIELD_CHANGE',			null										),
+		-- 25% faster build with Quantum-Fabrik (production bonus for this unit type)
+		('MODIFIER_MECH_ELITE_FASTER_BUILD_WITH_FABRIK',		'MODIFIER_PLAYER_CITIES_ADJUST_UNIT_PRODUCTION',			'REQSET_DEVRIM_CITY_HAS_QUANTUM_FABRIK'		),
 		-- +5 Science on kill
 		('MODIFIER_MECH_ELITE_SCIENCE_ON_KILL',					'MODIFIER_UNIT_ADJUST_POST_COMBAT_YIELD',					null										),
 		-- Combat bonus (base +3 already in unit stats, simulating mine bonus)
@@ -215,13 +210,9 @@ VALUES
 INSERT INTO ModifierArguments		
 		(ModifierId,											Name,						Value											)
 VALUES	
-		-- 25% production cost reduction
+		-- 25% production bonus for this unit
 		('MODIFIER_MECH_ELITE_FASTER_BUILD_WITH_FABRIK',		'UnitType',					'UNIT_DEVRIM_MECHANISIERTE_ELITE'				),
-		('MODIFIER_MECH_ELITE_FASTER_BUILD_WITH_FABRIK',		'Amount',					-25												),
-		-- +20 Production on complete (attach modifier)
-		('MODIFIER_MECH_ELITE_PRODUCTION_ON_COMPLETE',			'ModifierId',				'MODIFIER_MECH_ELITE_PRODUCTION_ON_COMPLETE_EFFECT'),
-		('MODIFIER_MECH_ELITE_PRODUCTION_ON_COMPLETE_EFFECT',	'YieldType',				'YIELD_PRODUCTION'								),
-		('MODIFIER_MECH_ELITE_PRODUCTION_ON_COMPLETE_EFFECT',	'Amount',					20												),
+		('MODIFIER_MECH_ELITE_FASTER_BUILD_WITH_FABRIK',		'Amount',					25												),
 		-- +5 Science on kill
 		('MODIFIER_MECH_ELITE_SCIENCE_ON_KILL',					'YieldType',				'YIELD_SCIENCE'									),
 		('MODIFIER_MECH_ELITE_SCIENCE_ON_KILL',					'Amount',					5												),
