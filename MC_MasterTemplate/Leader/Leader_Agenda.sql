@@ -129,16 +129,16 @@ VALUES		('REQSET_DEVRIM_AGENDA_UNHAPPY',	'REQUIREMENTSET_TEST_ALL'	),
 -----------------------------------------------
 -- RequirementSetRequirements
 
--- UNHAPPY: Low production
--- HAPPY: High production AND high science
+-- UNHAPPY: Low economy (approximated using low gold metrics since production tracking is not available)
+-- HAPPY: High production AND high science (approximated using high gold and high science metrics)
 -----------------------------------------------
 
 INSERT INTO RequirementSetRequirements
 			(RequirementSetId,					RequirementId						)
 VALUES		('REQSET_DEVRIM_AGENDA_UNHAPPY',	'REQUIRES_MAJOR_CIV_OPPONENT'		),
 			('REQSET_DEVRIM_AGENDA_UNHAPPY',	'REQUIRES_MET_10_TURNS_AGO'			),
-			('REQSET_DEVRIM_AGENDA_UNHAPPY',	'REQUIRES_HAS_LOW_PRODUCTION'		),
+			('REQSET_DEVRIM_AGENDA_UNHAPPY',	'REQUIRES_HAS_LOW_GOLD'				),
 			('REQSET_DEVRIM_AGENDA_HAPPY',		'REQUIRES_MAJOR_CIV_OPPONENT'		),
 			('REQSET_DEVRIM_AGENDA_HAPPY',		'REQUIRES_MET_10_TURNS_AGO'			),
-			('REQSET_DEVRIM_AGENDA_HAPPY',		'REQUIRES_HAS_HIGH_PRODUCTION'		),
+			('REQSET_DEVRIM_AGENDA_HAPPY',		'REQUIRES_HAS_HIGH_GOLD'			),
 			('REQSET_DEVRIM_AGENDA_HAPPY',		'REQUIRES_HAS_HIGH_SCIENCE'			);
