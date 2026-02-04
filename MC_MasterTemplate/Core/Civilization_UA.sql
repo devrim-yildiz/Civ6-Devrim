@@ -1,105 +1,193 @@
 /*
-	Civilization Unique Ability
-	Authors: MC
+	Civilization Unique Abilities
+	Authors: Devrim
+	
+	This file implements:
+	1. Civ-Bonus "Maschinengeist"
+	2. Civ Trait "Produktionsfluss"
+	3. Sekundär-Bonus "Finanzintegration"
 */
 
 -----------------------------------------------
 -- Types
 
--- The game code cites the Civilization Ability as a 'Trait', hence we're using that term here (and throughout this section). 
-
--- This inserts the Unique Ability reference into the primary Data Types table as a recognised trait. This is mandatory, if configuring a custom trait for your civilization. The string listed under 'Type' must be used throughout the mod when referring to the TraitType.
-
--- The standard naming convention follows: TRAIT_CIVILIZATION_PREFIX_TRAITNAME
-
--- As with everywhere else, we're using our PREFIX to try and keep things unique. This also helps us differentiate the things we are creating and the things we are borrowing from the game.
-
--- Configuring a Unique Ability for your custom civilization is entirely optional, but it is typically considered appropriate for balance to configure one, such that your custom civilization matches those from the base games in terms of complexity, both for flavour and gameplay balance.
+-- Define all traits for Devrim's civilization
 -----------------------------------------------
 
 INSERT INTO	Types
-		(Type,												Kind			)
-VALUES	('TRAIT_CIVILIZATION_MC_LET_THE_GODS_FEED_US',		'KIND_TRAIT'	);
+		(Type,													Kind			)
+VALUES	('TRAIT_CIVILIZATION_DEVRIM_MASCHINENGEIST',			'KIND_TRAIT'	),
+		('TRAIT_CIVILIZATION_DEVRIM_PRODUKTIONSFLUSS',			'KIND_TRAIT'	),
+		('TRAIT_CIVILIZATION_DEVRIM_FINANZINTEGRATION',			'KIND_TRAIT'	);
 
 -----------------------------------------------
 -- Traits
 
--- With the TraitType defined (above), the below then inserts it into the overall Traits table. This allows it to exist in its own right, alongside other TraitType elements and ties it to the locally-referenced Name and Description text strings that name and describe the trait, respectively.
+-- Define the traits with their names and descriptions
 -----------------------------------------------
 
 INSERT INTO	Traits	
-		(TraitType,											Name,														Description														)
-VALUES	('TRAIT_CIVILIZATION_MC_LET_THE_GODS_FEED_US',		'LOC_TRAIT_CIVILIZATION_MC_LET_THE_GODS_FEED_US_NAME',		'LOC_TRAIT_CIVILIZATION_MC_LET_THE_GODS_FEED_US_DESCRIPTION'	);
+		(TraitType,												Name,															Description															)
+VALUES	('TRAIT_CIVILIZATION_DEVRIM_MASCHINENGEIST',			'LOC_TRAIT_CIVILIZATION_DEVRIM_MASCHINENGEIST_NAME',			'LOC_TRAIT_CIVILIZATION_DEVRIM_MASCHINENGEIST_DESCRIPTION'			),
+		('TRAIT_CIVILIZATION_DEVRIM_PRODUKTIONSFLUSS',			'LOC_TRAIT_CIVILIZATION_DEVRIM_PRODUKTIONSFLUSS_NAME',			'LOC_TRAIT_CIVILIZATION_DEVRIM_PRODUKTIONSFLUSS_DESCRIPTION'		),
+		('TRAIT_CIVILIZATION_DEVRIM_FINANZINTEGRATION',			'LOC_TRAIT_CIVILIZATION_DEVRIM_FINANZINTEGRATION_NAME',			'LOC_TRAIT_CIVILIZATION_DEVRIM_FINANZINTEGRATION_DESCRIPTION'		);
 		
 -----------------------------------------------
 -- CivilizationTraits
 
--- This defines the civilization to which the TraitType is applied (i.e. which civilization gets the Unique Ability). This is a simple matter of referencing the custom CivilizationType defined in Civilization_Config.sql and using the TraitType defined at the head of this document.
+-- Assign all traits to our civilization
 -----------------------------------------------
 
 INSERT INTO	CivilizationTraits
-		(CivilizationType,				TraitType										)
-VALUES	('CIVILIZATION_MC_OLMEC',		'TRAIT_CIVILIZATION_MC_LET_THE_GODS_FEED_US'	);
+		(CivilizationType,						TraitType											)
+VALUES	('CIVILIZATION_DEVRIM_MINISTERIUM',		'TRAIT_CIVILIZATION_DEVRIM_MASCHINENGEIST'			),
+		('CIVILIZATION_DEVRIM_MINISTERIUM',		'TRAIT_CIVILIZATION_DEVRIM_PRODUKTIONSFLUSS'		),
+		('CIVILIZATION_DEVRIM_MINISTERIUM',		'TRAIT_CIVILIZATION_DEVRIM_FINANZINTEGRATION'		);
 
 -----------------------------------------------
 -- TraitModifiers
 
--- The below entry - or entries, in this example case - tie the effective modifiers to the TraitType. A modifier is the top-level item that instructs the game to perform a deviation away from the base ruleset in some way. The possibilities are endless, so these notes make no attempt to cover what can be done - only to instruct against the logic, step by step.
+-- MASCHINENGEIST:
+-- - Cities with Quantum-Fabrik + Campus get +10% Production (implemented via building)
+-- - Mines in cities with Campus give +1 Science
+-- - Domestic Trade Routes to cities with Campus/Factory give +2 Production & +1 Science
 
--- This template will walk you through a typical example, nonetheless; though I highly recommend spending some time familiarising yourself with the base-game files and/or the database to get a general appreciation of how things work.
+-- PRODUKTIONSFLUSS:
+-- - Cities with Quantum-Fabrik keep 20% production (implemented via building modifier)
+-- - Cities with Quantum-Fabrik + Campus get +10% Production (combined with Maschinengeist)
 
--- In this example, we're assigning two Modifiers to the Civilization Trait we created. That is, there are two gameplay effects that this trait will be directly responsible for causing to happen. I'll explain the specific gameplay effects in the code in latter parts of this file.
-
--- Learning point: There are numerous ways to unfurl the logic that follows below. For me, the most effective way was a combination of following the base game data, trial and error and (admittedly) a healthy dose of asking for help.
-
--- Learning point: The starting point to search in the base game XML is to look-up an existing CivilizationType (e.g. CIVILIZATION_AMERICA) and note their TRAIT_CIVILIZATION_ that is neither the Unique Infrastructure nor the Unique Unit. In America's case, it is TRAIT_CIVILIZATION_FOUNDING_FATHERS. Searching that will lead you to the ModifierId entry (or entries) that grant the various bonuses associated with that TraitType. You can apply this simple principle in order to look-up how the code is constructed, in every situation.
+-- FINANZINTEGRATION:
+-- - Markets & Banks in cities with Industrial Zone give +1 Production
+-- - Trade routes to cities with Market give +1 Gold
 -----------------------------------------------
 
 INSERT INTO	TraitModifiers	
-		(TraitType,											ModifierId											)
-VALUES	('TRAIT_CIVILIZATION_MC_LET_THE_GODS_FEED_US',		'MODIFIER_MC_LET_THE_GODS_FEED_US_SHRINE_YIELD'		),
-		('TRAIT_CIVILIZATION_MC_LET_THE_GODS_FEED_US',		'MODIFIER_MC_LET_THE_GODS_FEED_US_TEMPLE_YIELD'		);
+		(TraitType,												ModifierId														)
+VALUES	
+		-- MASCHINENGEIST: Mines in cities with Campus give +1 Science
+		('TRAIT_CIVILIZATION_DEVRIM_MASCHINENGEIST',				'MODIFIER_DEVRIM_MINE_SCIENCE_WITH_CAMPUS'						),
+		-- MASCHINENGEIST: Domestic Trade Routes to cities with Campus give +2 Production & +1 Science
+		('TRAIT_CIVILIZATION_DEVRIM_MASCHINENGEIST',				'MODIFIER_DEVRIM_TRADE_CAMPUS_PRODUCTION'						),
+		('TRAIT_CIVILIZATION_DEVRIM_MASCHINENGEIST',				'MODIFIER_DEVRIM_TRADE_CAMPUS_SCIENCE'							),
+		-- MASCHINENGEIST: Domestic Trade Routes to cities with Factory give +2 Production & +1 Science
+		('TRAIT_CIVILIZATION_DEVRIM_MASCHINENGEIST',				'MODIFIER_DEVRIM_TRADE_FACTORY_PRODUCTION'						),
+		('TRAIT_CIVILIZATION_DEVRIM_MASCHINENGEIST',				'MODIFIER_DEVRIM_TRADE_FACTORY_SCIENCE'							),
+		-- FINANZINTEGRATION: Markets in cities with Industrial Zone give +1 Production
+		('TRAIT_CIVILIZATION_DEVRIM_FINANZINTEGRATION',			'MODIFIER_DEVRIM_MARKET_PRODUCTION_WITH_IND'					),
+		-- FINANZINTEGRATION: Banks in cities with Industrial Zone give +1 Production
+		('TRAIT_CIVILIZATION_DEVRIM_FINANZINTEGRATION',			'MODIFIER_DEVRIM_BANK_PRODUCTION_WITH_IND'						),
+		-- FINANZINTEGRATION: Trade routes to cities with Market give +1 Gold
+		('TRAIT_CIVILIZATION_DEVRIM_FINANZINTEGRATION',			'MODIFIER_DEVRIM_TRADE_TO_MARKET_GOLD'							);
 
 -----------------------------------------------
 -- Modifiers
 
--- This section defines, for each of your modifiers, the type of modifier it is and the conditions under which it is applied.
-
--- The ModifierType is important - it governs the sphere of application of the effect(s) in question. It does this by having a defined pair of values linked to it - known as a CollectionType and an EffectType. The CollectionType instructs the game on which elements/items (all civilizations, one specific civilization, all cities of one civilization, etc) to apply the modifier, whilst the EffectType instructs the game as to what change to apply (grant more of a yield, increase combat strength, etc).
-
--- The naming convention for a ModifierType is typically: MODIFIER_COLLECTIONTYPE_EFFECTTYPE, where COLLECTIONTYPE and EFFECTTYPE cite the two parts that make up a modifier (explained directly above). I strongly recommend making use of existing ModifierType values until you are confident with creating your own. As a general principle, find an existing ability that is similar in construct to what you wish to achieve, look it up, identify the ModifierType it uses and then enter that into the ModifierType value(s) below.
-
--- RunOnce and Permanent are boolean values that instruct the game on the points at which the modifier is, or can be, applied. There is an excellent guide available via CivFanatics that explains these concepts (and more) that I highly recommend:
-
--- https://forums.civfanatics.com/resources/using-modifiers-chapter-1-creating-and-attaching-modifiers.25683/ --
-
--- In this case, we have two gameplay effects - both similar in nature. As a result, we're using the same ModifierType for both of them. The two effects we want to grant is to increase the yield that a particular building grants our custom civilization, when built. As with many things in the base-game's code, once we understand the terminology, the unique strings used are fairly intuitive.
+-- Define all modifiers for the traits
 -----------------------------------------------
 
 INSERT INTO	Modifiers
-		(ModifierId,											ModifierType,											RunOnce,		Permanent	)
-VALUES	('MODIFIER_MC_LET_THE_GODS_FEED_US_SHRINE_YIELD',		'MODIFIER_PLAYER_CITIES_ADJUST_BUILDING_YIELD_CHANGE',	0,				1			),
-		('MODIFIER_MC_LET_THE_GODS_FEED_US_TEMPLE_YIELD',		'MODIFIER_PLAYER_CITIES_ADJUST_BUILDING_YIELD_CHANGE',	0,				1			);
+		(ModifierId,													ModifierType,													SubjectRequirementSetId					)
+VALUES	
+		-- Mines give +1 Science if city has Campus
+		('MODIFIER_DEVRIM_MINE_SCIENCE_WITH_CAMPUS',					'MODIFIER_PLAYER_CITIES_ADJUST_IMPROVEMENT_YIELD_CHANGE',		'REQSET_DEVRIM_CITY_HAS_CAMPUS'			),
+		-- Trade routes to Campus cities give +2 Production
+		('MODIFIER_DEVRIM_TRADE_CAMPUS_PRODUCTION',						'MODIFIER_PLAYER_ADJUST_TRADE_ROUTE_YIELD_FOR_DOMESTIC',		'REQSET_DEVRIM_DESTINATION_HAS_CAMPUS'	),
+		-- Trade routes to Campus cities give +1 Science
+		('MODIFIER_DEVRIM_TRADE_CAMPUS_SCIENCE',						'MODIFIER_PLAYER_ADJUST_TRADE_ROUTE_YIELD_FOR_DOMESTIC',		'REQSET_DEVRIM_DESTINATION_HAS_CAMPUS'	),
+		-- Trade routes to Factory cities give +2 Production
+		('MODIFIER_DEVRIM_TRADE_FACTORY_PRODUCTION',					'MODIFIER_PLAYER_ADJUST_TRADE_ROUTE_YIELD_FOR_DOMESTIC',		'REQSET_DEVRIM_DESTINATION_HAS_FACTORY'	),
+		-- Trade routes to Factory cities give +1 Science
+		('MODIFIER_DEVRIM_TRADE_FACTORY_SCIENCE',						'MODIFIER_PLAYER_ADJUST_TRADE_ROUTE_YIELD_FOR_DOMESTIC',		'REQSET_DEVRIM_DESTINATION_HAS_FACTORY'	),
+		-- Markets give +1 Production if city has Industrial Zone
+		('MODIFIER_DEVRIM_MARKET_PRODUCTION_WITH_IND',					'MODIFIER_PLAYER_CITIES_ADJUST_BUILDING_YIELD_CHANGE',			'REQSET_DEVRIM_CITY_HAS_IND_ZONE'		),
+		-- Banks give +1 Production if city has Industrial Zone
+		('MODIFIER_DEVRIM_BANK_PRODUCTION_WITH_IND',					'MODIFIER_PLAYER_CITIES_ADJUST_BUILDING_YIELD_CHANGE',			'REQSET_DEVRIM_CITY_HAS_IND_ZONE'		),
+		-- Trade routes to cities with Market give +1 Gold
+		('MODIFIER_DEVRIM_TRADE_TO_MARKET_GOLD',						'MODIFIER_PLAYER_ADJUST_TRADE_ROUTE_YIELD',						'REQSET_DEVRIM_DESTINATION_HAS_MARKET'	);
 
 -----------------------------------------------
 -- ModifierArguments
 
--- The below entries define the specific deviations from the base game ruleset that are applied when the modifier is executed and attached to the pertinent items.
-
--- The ModifierType governs the actual 'values' that are accepted within the Name column, which in turn governs the values that are accepted within the value column. I expect the below example data will make those connections clear.
-
--- More specifically, the EffectType that is used by the ModifierType directly dictates the values allowed. In our case, we are adjusting a yield that is provided by a building. It follows, therefore, that the ModifierType allows us to specify three variables: BuildingType, YieldType and Amount.
-
--- Together, these values tell the game that the Shrine building provides an additional +2 Food, whilst the Temple has the same effect.
-
--- Logic recap: As the Modifiers using these ModifierArguments are linked to a CivilizationTrait via the TraitModifiers table, these bonuses are only available if a Civilization has been assigned that trait. We assigned it via the CivilizationTraits table and only to our custom civilization. By doing this, we've granted our civilization (only) an additional +2 Food yield from each of the Shrine and Temple buildings.
+-- Define the actual values for each modifier
 -----------------------------------------------
 
 INSERT INTO	ModifierArguments
-		(ModifierId,												Name,							Value									)
-VALUES	('MODIFIER_MC_LET_THE_GODS_FEED_US_SHRINE_YIELD',			'BuildingType',					'BUILDING_SHRINE'						),
-		('MODIFIER_MC_LET_THE_GODS_FEED_US_SHRINE_YIELD',			'YieldType',					'YIELD_FOOD'							),
-		('MODIFIER_MC_LET_THE_GODS_FEED_US_SHRINE_YIELD',			'Amount',						2										),
-		('MODIFIER_MC_LET_THE_GODS_FEED_US_TEMPLE_YIELD',			'BuildingType',					'BUILDING_TEMPLE'						),
-		('MODIFIER_MC_LET_THE_GODS_FEED_US_TEMPLE_YIELD',			'YieldType',					'YIELD_FOOD'							),
-		('MODIFIER_MC_LET_THE_GODS_FEED_US_TEMPLE_YIELD',			'Amount',						2										);
+		(ModifierId,													Name,							Value									)
+VALUES	
+		-- Mines give +1 Science
+		('MODIFIER_DEVRIM_MINE_SCIENCE_WITH_CAMPUS',					'ImprovementType',				'IMPROVEMENT_MINE'						),
+		('MODIFIER_DEVRIM_MINE_SCIENCE_WITH_CAMPUS',					'YieldType',					'YIELD_SCIENCE'							),
+		('MODIFIER_DEVRIM_MINE_SCIENCE_WITH_CAMPUS',					'Amount',						1										),
+		-- Trade to Campus: +2 Production
+		('MODIFIER_DEVRIM_TRADE_CAMPUS_PRODUCTION',						'YieldType',					'YIELD_PRODUCTION'						),
+		('MODIFIER_DEVRIM_TRADE_CAMPUS_PRODUCTION',						'Amount',						2										),
+		-- Trade to Campus: +1 Science
+		('MODIFIER_DEVRIM_TRADE_CAMPUS_SCIENCE',						'YieldType',					'YIELD_SCIENCE'							),
+		('MODIFIER_DEVRIM_TRADE_CAMPUS_SCIENCE',						'Amount',						1										),
+		-- Trade to Factory: +2 Production
+		('MODIFIER_DEVRIM_TRADE_FACTORY_PRODUCTION',					'YieldType',					'YIELD_PRODUCTION'						),
+		('MODIFIER_DEVRIM_TRADE_FACTORY_PRODUCTION',					'Amount',						2										),
+		-- Trade to Factory: +1 Science
+		('MODIFIER_DEVRIM_TRADE_FACTORY_SCIENCE',						'YieldType',					'YIELD_SCIENCE'							),
+		('MODIFIER_DEVRIM_TRADE_FACTORY_SCIENCE',						'Amount',						1										),
+		-- Market gives +1 Production with Industrial Zone
+		('MODIFIER_DEVRIM_MARKET_PRODUCTION_WITH_IND',					'BuildingType',					'BUILDING_MARKET'						),
+		('MODIFIER_DEVRIM_MARKET_PRODUCTION_WITH_IND',					'YieldType',					'YIELD_PRODUCTION'						),
+		('MODIFIER_DEVRIM_MARKET_PRODUCTION_WITH_IND',					'Amount',						1										),
+		-- Bank gives +1 Production with Industrial Zone
+		('MODIFIER_DEVRIM_BANK_PRODUCTION_WITH_IND',					'BuildingType',					'BUILDING_BANK'							),
+		('MODIFIER_DEVRIM_BANK_PRODUCTION_WITH_IND',					'YieldType',					'YIELD_PRODUCTION'						),
+		('MODIFIER_DEVRIM_BANK_PRODUCTION_WITH_IND',					'Amount',						1										),
+		-- Trade to Market city: +1 Gold
+		('MODIFIER_DEVRIM_TRADE_TO_MARKET_GOLD',						'YieldType',					'YIELD_GOLD'							),
+		('MODIFIER_DEVRIM_TRADE_TO_MARKET_GOLD',						'Amount',						1										);
+
+-----------------------------------------------
+-- RequirementSets
+
+-- Define requirement sets for conditional modifiers
+-----------------------------------------------
+
+INSERT INTO RequirementSets
+		(RequirementSetId,							RequirementSetType				)
+VALUES	('REQSET_DEVRIM_CITY_HAS_CAMPUS',			'REQUIREMENTSET_TEST_ALL'		),
+		('REQSET_DEVRIM_CITY_HAS_IND_ZONE',			'REQUIREMENTSET_TEST_ALL'		),
+		('REQSET_DEVRIM_DESTINATION_HAS_CAMPUS',	'REQUIREMENTSET_TEST_ALL'		),
+		('REQSET_DEVRIM_DESTINATION_HAS_FACTORY',	'REQUIREMENTSET_TEST_ALL'		),
+		('REQSET_DEVRIM_DESTINATION_HAS_MARKET',	'REQUIREMENTSET_TEST_ALL'		);
+
+-----------------------------------------------
+-- RequirementSetRequirements
+-----------------------------------------------
+
+INSERT INTO RequirementSetRequirements
+		(RequirementSetId,							RequirementId										)
+VALUES	('REQSET_DEVRIM_CITY_HAS_CAMPUS',			'REQ_DEVRIM_CITY_HAS_CAMPUS'						),
+		('REQSET_DEVRIM_CITY_HAS_IND_ZONE',			'REQ_DEVRIM_CITY_HAS_IND_ZONE'						),
+		('REQSET_DEVRIM_DESTINATION_HAS_CAMPUS',	'REQ_DEVRIM_DESTINATION_HAS_CAMPUS'					),
+		('REQSET_DEVRIM_DESTINATION_HAS_FACTORY',	'REQ_DEVRIM_DESTINATION_HAS_FACTORY'				),
+		('REQSET_DEVRIM_DESTINATION_HAS_MARKET',	'REQ_DEVRIM_DESTINATION_HAS_MARKET'					);
+
+-----------------------------------------------
+-- Requirements
+-----------------------------------------------
+
+INSERT INTO Requirements
+		(RequirementId, 								RequirementType									)
+VALUES	('REQ_DEVRIM_CITY_HAS_CAMPUS',					'REQUIREMENT_CITY_HAS_DISTRICT'					),
+		('REQ_DEVRIM_CITY_HAS_IND_ZONE',				'REQUIREMENT_CITY_HAS_DISTRICT'					),
+		('REQ_DEVRIM_DESTINATION_HAS_CAMPUS',			'REQUIREMENT_DESTINATION_CITY_HAS_DISTRICT'		),
+		('REQ_DEVRIM_DESTINATION_HAS_FACTORY',			'REQUIREMENT_DESTINATION_CITY_HAS_BUILDING'		),
+		('REQ_DEVRIM_DESTINATION_HAS_MARKET',			'REQUIREMENT_DESTINATION_CITY_HAS_BUILDING'		);
+
+-----------------------------------------------
+-- RequirementArguments
+-----------------------------------------------
+
+INSERT INTO RequirementArguments
+		(RequirementId, 								Name,						Value							)
+VALUES	('REQ_DEVRIM_CITY_HAS_CAMPUS', 					'DistrictType',				'DISTRICT_CAMPUS'				),
+		('REQ_DEVRIM_CITY_HAS_IND_ZONE', 				'DistrictType',				'DISTRICT_INDUSTRIAL_ZONE'		),
+		('REQ_DEVRIM_DESTINATION_HAS_CAMPUS', 			'DistrictType',				'DISTRICT_CAMPUS'				),
+		('REQ_DEVRIM_DESTINATION_HAS_FACTORY', 			'BuildingType',				'BUILDING_FACTORY'				),
+		('REQ_DEVRIM_DESTINATION_HAS_MARKET', 			'BuildingType',				'BUILDING_MARKET'				);
