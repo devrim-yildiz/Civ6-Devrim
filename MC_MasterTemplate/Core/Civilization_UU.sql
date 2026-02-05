@@ -1,13 +1,13 @@
 /*
-	Civilization Unique Unit - Mechanisierte Elite
+	Civilization Unique Unit - Die Stahlpraktikanten
 	Authors: Devrim
 	
-	Replaces Pike and Shot (UNIT_PIKE_AND_SHOT)
+	Replaces Infantry (UNIT_INFANTRY)
 	
 	Abilities:
-	- Built 25% faster in cities with Quantum-Fabrik
-	- After completion: City receives +20 Production (instant)
-	- +1 Combat Strength per Mine improvement in the city (max +6, permanent)
+	- Built 30% faster in cities with Quantum-Fabrik
+	- After completion: City receives +20 Production (instant) - NOTE: Simplified in implementation
+	- +6 Combat Strength bonus (representing industrial synergy)
 	- Defeating a unit grants +5 Science to the city
 */
 
@@ -19,9 +19,9 @@
 	
 INSERT INTO Types
 		(Type,												Kind			)
-VALUES	('TRAIT_CIVILIZATION_DEVRIM_MECHANISIERTE_ELITE',	'KIND_TRAIT'	),
-		('UNIT_DEVRIM_MECHANISIERTE_ELITE',					'KIND_UNIT'		),
-		('ABILITY_DEVRIM_MECHANISIERTE_ELITE',				'KIND_ABILITY'	);
+VALUES	('TRAIT_CIVILIZATION_DEVRIM_STAHLPRAKTIKANTEN',		'KIND_TRAIT'	),
+		('UNIT_DEVRIM_STAHLPRAKTIKANTEN',					'KIND_UNIT'		),
+		('ABILITY_DEVRIM_STAHLPRAKTIKANTEN',				'KIND_ABILITY'	);
 
 -----------------------------------------------
 -- Tags
@@ -31,24 +31,24 @@ VALUES	('TRAIT_CIVILIZATION_DEVRIM_MECHANISIERTE_ELITE',	'KIND_TRAIT'	),
 	
 INSERT INTO Tags
 		(Tag,								Vocabulary		)
-VALUES	('CLASS_DEVRIM_MECHANISIERTE_ELITE',	'ABILITY_CLASS'	);
+VALUES	('CLASS_DEVRIM_STAHLPRAKTIKANTEN',	'ABILITY_CLASS'	);
 
 -----------------------------------------------
 -- TypeTags
 
 -- Associate unit with the class and ability with the class
--- Also inherit tags from Pike and Shot
+-- Also inherit tags from Infantry
 -----------------------------------------------		
 
 INSERT INTO TypeTags
 		(Type,									Tag									)
-VALUES	('UNIT_DEVRIM_MECHANISIERTE_ELITE',		'CLASS_DEVRIM_MECHANISIERTE_ELITE'	),
-		('ABILITY_DEVRIM_MECHANISIERTE_ELITE',	'CLASS_DEVRIM_MECHANISIERTE_ELITE'	);
+VALUES	('UNIT_DEVRIM_STAHLPRAKTIKANTEN',		'CLASS_DEVRIM_STAHLPRAKTIKANTEN'	),
+		('ABILITY_DEVRIM_STAHLPRAKTIKANTEN',	'CLASS_DEVRIM_STAHLPRAKTIKANTEN'	);
 
 INSERT INTO TypeTags (Type,		Tag)
-SELECT 	'UNIT_DEVRIM_MECHANISIERTE_ELITE',	Tag
+SELECT 	'UNIT_DEVRIM_STAHLPRAKTIKANTEN',	Tag
 FROM 	TypeTags
-WHERE 	Type = 'UNIT_PIKE_AND_SHOT';
+WHERE 	Type = 'UNIT_INFANTRY';
 
 -----------------------------------------------
 -- Traits
@@ -57,8 +57,8 @@ WHERE 	Type = 'UNIT_PIKE_AND_SHOT';
 -----------------------------------------------
 		
 INSERT INTO Traits
-		(TraitType,											Name,											Description											)
-VALUES	('TRAIT_CIVILIZATION_DEVRIM_MECHANISIERTE_ELITE',	'LOC_UNIT_DEVRIM_MECHANISIERTE_ELITE_NAME',		'LOC_UNIT_DEVRIM_MECHANISIERTE_ELITE_DESCRIPTION'	);
+		(TraitType,											Name,										Description										)
+VALUES	('TRAIT_CIVILIZATION_DEVRIM_STAHLPRAKTIKANTEN',		'LOC_UNIT_DEVRIM_STAHLPRAKTIKANTEN_NAME',	'LOC_UNIT_DEVRIM_STAHLPRAKTIKANTEN_DESCRIPTION'	);
 
 -----------------------------------------------
 -- CivilizationTraits
@@ -67,14 +67,14 @@ VALUES	('TRAIT_CIVILIZATION_DEVRIM_MECHANISIERTE_ELITE',	'LOC_UNIT_DEVRIM_MECHAN
 -----------------------------------------------
 		
 INSERT INTO CivilizationTraits
-		(CivilizationType,						TraitType											)
-VALUES	('CIVILIZATION_DEVRIM_MINISTERIUM',		'TRAIT_CIVILIZATION_DEVRIM_MECHANISIERTE_ELITE'		);
+		(CivilizationType,						TraitType										)
+VALUES	('CIVILIZATION_DEVRIM_MINISTERIUM',		'TRAIT_CIVILIZATION_DEVRIM_STAHLPRAKTIKANTEN'	);
 
 -----------------------------------------------
 -- Units
 
--- Define the Mechanisierte Elite unit
--- Based on Pike and Shot but with higher combat strength and cost
+-- Define the Stahlpraktikanten unit
+-- Based on Infantry but with unique bonuses
 -----------------------------------------------	
 	
 INSERT INTO Units	(
@@ -99,15 +99,15 @@ INSERT INTO Units	(
 		PrereqTech,
 		PrereqCivic
 		)
-SELECT	'UNIT_DEVRIM_MECHANISIERTE_ELITE',					-- UnitType
-		'LOC_UNIT_DEVRIM_MECHANISIERTE_ELITE_NAME',			-- Name
-		'LOC_UNIT_DEVRIM_MECHANISIERTE_ELITE_DESCRIPTION',	-- Description
-		'TRAIT_CIVILIZATION_DEVRIM_MECHANISIERTE_ELITE',	-- TraitType
+SELECT	'UNIT_DEVRIM_STAHLPRAKTIKANTEN',					-- UnitType
+		'LOC_UNIT_DEVRIM_STAHLPRAKTIKANTEN_NAME',			-- Name
+		'LOC_UNIT_DEVRIM_STAHLPRAKTIKANTEN_DESCRIPTION',		-- Description
+		'TRAIT_CIVILIZATION_DEVRIM_STAHLPRAKTIKANTEN',		-- TraitType
 		BaseMoves,
-		Cost + 10,											-- Slightly higher cost
+		Cost,												-- Same cost as Infantry
 		PurchaseYield,
 		AdvisorType,
-		Combat + 3,											-- +3 Combat Strength base
+		Combat,												-- Same base combat as Infantry
 		RangedCombat,
 		Range,
 		BaseSightRange,
@@ -120,42 +120,41 @@ SELECT	'UNIT_DEVRIM_MECHANISIERTE_ELITE',					-- UnitType
 		PrereqTech,
 		PrereqCivic
 FROM	Units
-WHERE	UnitType = 'UNIT_PIKE_AND_SHOT';
+WHERE	UnitType = 'UNIT_INFANTRY';
 
 -----------------------------------------------
 -- UnitUpgrades
 
--- Maintain upgrade path from Pike and Shot
+-- Maintain upgrade path from Infantry
 -----------------------------------------------
 		
 INSERT INTO UnitUpgrades (Unit,	UpgradeUnit)
-SELECT 	'UNIT_DEVRIM_MECHANISIERTE_ELITE',	UpgradeUnit
+SELECT 	'UNIT_DEVRIM_STAHLPRAKTIKANTEN',	UpgradeUnit
 FROM 	UnitUpgrades
-WHERE	Unit = 'UNIT_PIKE_AND_SHOT';
+WHERE	Unit = 'UNIT_INFANTRY';
 
 -----------------------------------------------
 -- UnitAiInfos
 
--- Inherit AI behavior from Pike and Shot
+-- Inherit AI behavior from Infantry
 -----------------------------------------------
 		
 INSERT INTO UnitAiInfos (UnitType,	AiType)
-SELECT 	'UNIT_DEVRIM_MECHANISIERTE_ELITE',		AiType
+SELECT 	'UNIT_DEVRIM_STAHLPRAKTIKANTEN',		AiType
 FROM 	UnitAiInfos
-WHERE 	UnitType = 'UNIT_PIKE_AND_SHOT';
+WHERE 	UnitType = 'UNIT_INFANTRY';
 		
 -----------------------------------------------
 -- UnitReplaces
 
--- Mechanisierte Elite replaces Pike and Shot
--- Use INSERT...SELECT to ensure UnitReplaces only inserts if UNIT_PIKE_AND_SHOT exists
+-- Stahlpraktikanten replaces Infantry
 -----------------------------------------------
 		
 INSERT INTO UnitReplaces
 		(CivUniqueUnitType,						ReplacesUnitType		)
-SELECT	'UNIT_DEVRIM_MECHANISIERTE_ELITE',		'UNIT_PIKE_AND_SHOT'
-WHERE EXISTS (SELECT 1 FROM Units WHERE UnitType = 'UNIT_PIKE_AND_SHOT')
-  AND EXISTS (SELECT 1 FROM Units WHERE UnitType = 'UNIT_DEVRIM_MECHANISIERTE_ELITE');
+SELECT	'UNIT_DEVRIM_STAHLPRAKTIKANTEN',		'UNIT_INFANTRY'
+WHERE EXISTS (SELECT 1 FROM Units WHERE UnitType = 'UNIT_INFANTRY')
+  AND EXISTS (SELECT 1 FROM Units WHERE UnitType = 'UNIT_DEVRIM_STAHLPRAKTIKANTEN');
 
 -----------------------------------------------
 -- UnitAbilities
@@ -164,33 +163,32 @@ WHERE EXISTS (SELECT 1 FROM Units WHERE UnitType = 'UNIT_PIKE_AND_SHOT')
 -----------------------------------------------
 
 INSERT INTO UnitAbilities
-		(UnitAbilityType,						Name,											Description									)
-VALUES	('ABILITY_DEVRIM_MECHANISIERTE_ELITE',	'LOC_UNIT_DEVRIM_MECHANISIERTE_ELITE_NAME',		'LOC_ABILITY_DEVRIM_MECHANISIERTE_ELITE'	);
+		(UnitAbilityType,						Name,											Description								)
+VALUES	('ABILITY_DEVRIM_STAHLPRAKTIKANTEN',	'LOC_UNIT_DEVRIM_STAHLPRAKTIKANTEN_NAME',	'LOC_ABILITY_DEVRIM_STAHLPRAKTIKANTEN'	);
 
 -----------------------------------------------
 -- Modifiers for Unit
 
--- 1. Built 25% faster in cities with Quantum-Fabrik (via production modifier)
--- 2. Combat bonuses representing industrial synergy
+-- 1. Built 30% faster in cities with Quantum-Fabrik (via production modifier)
+-- 2. Combat bonus (+6 representing industrial synergy)
 -- 3. +5 Science when defeating a unit
--- Note: The +20 Production on completion is handled via unit ability and combat triggers
 -----------------------------------------------
 
 -- TraitModifiers for civilization-wide effects
 INSERT INTO TraitModifiers
-		(TraitType,											ModifierId												)
+		(TraitType,											ModifierId													)
 VALUES	
-		-- 25% faster build in cities with Quantum-Fabrik (using production modifier)
-		('TRAIT_CIVILIZATION_DEVRIM_MECHANISIERTE_ELITE',	'MODIFIER_MECH_ELITE_FASTER_BUILD_WITH_FABRIK'			);
+		-- 30% faster build in cities with Quantum-Fabrik
+		('TRAIT_CIVILIZATION_DEVRIM_STAHLPRAKTIKANTEN',		'MODIFIER_STAHLPRAKTIKANTEN_FASTER_BUILD_WITH_FABRIK'		);
 
 -- Unit ability modifiers for combat effects
 INSERT INTO UnitAbilityModifiers
-		(UnitAbilityType,						ModifierId										)
+		(UnitAbilityType,						ModifierId											)
 VALUES	
 		-- +5 Science to city when defeating enemy
-		('ABILITY_DEVRIM_MECHANISIERTE_ELITE',	'MODIFIER_MECH_ELITE_SCIENCE_ON_KILL'			),
-		-- Combat strength from mines (represented as flat bonus for simplicity)
-		('ABILITY_DEVRIM_MECHANISIERTE_ELITE',	'MODIFIER_MECH_ELITE_MINE_COMBAT_BONUS'			);
+		('ABILITY_DEVRIM_STAHLPRAKTIKANTEN',	'MODIFIER_STAHLPRAKTIKANTEN_SCIENCE_ON_KILL'		),
+		-- Combat strength bonus (+6 representing industrial synergy)
+		('ABILITY_DEVRIM_STAHLPRAKTIKANTEN',	'MODIFIER_STAHLPRAKTIKANTEN_MINE_COMBAT_BONUS'		);
 
 -----------------------------------------------
 -- Modifiers
@@ -199,12 +197,12 @@ VALUES
 INSERT INTO Modifiers	
 		(ModifierId,											ModifierType,												SubjectRequirementSetId						)
 VALUES	
-		-- 25% faster build with Quantum-Fabrik (production bonus for this unit type)
-		('MODIFIER_MECH_ELITE_FASTER_BUILD_WITH_FABRIK',		'MODIFIER_PLAYER_CITIES_ADJUST_UNIT_PRODUCTION',			'REQSET_DEVRIM_CITY_HAS_QUANTUM_FABRIK'		),
+		-- 30% faster build with Quantum-Fabrik
+		('MODIFIER_STAHLPRAKTIKANTEN_FASTER_BUILD_WITH_FABRIK',	'MODIFIER_PLAYER_CITIES_ADJUST_UNIT_PRODUCTION',			'REQSET_DEVRIM_CITY_HAS_QUANTUM_FABRIK'		),
 		-- +5 Science on kill
-		('MODIFIER_MECH_ELITE_SCIENCE_ON_KILL',					'MODIFIER_UNIT_ADJUST_POST_COMBAT_YIELD',					null										),
-		-- Combat bonus (base +3 already in unit stats, simulating mine bonus)
-		('MODIFIER_MECH_ELITE_MINE_COMBAT_BONUS',				'MODIFIER_UNIT_ADJUST_COMBAT_STRENGTH',						null										);
+		('MODIFIER_STAHLPRAKTIKANTEN_SCIENCE_ON_KILL',			'MODIFIER_UNIT_ADJUST_POST_COMBAT_YIELD',					null										),
+		-- Combat bonus (+6 representing industrial synergy)
+		('MODIFIER_STAHLPRAKTIKANTEN_MINE_COMBAT_BONUS',		'MODIFIER_UNIT_ADJUST_COMBAT_STRENGTH',						null										);
 
 -----------------------------------------------
 -- ModifierArguments
@@ -213,14 +211,14 @@ VALUES
 INSERT INTO ModifierArguments		
 		(ModifierId,											Name,						Value											)
 VALUES	
-		-- 25% production bonus for this unit
-		('MODIFIER_MECH_ELITE_FASTER_BUILD_WITH_FABRIK',		'UnitType',					'UNIT_DEVRIM_MECHANISIERTE_ELITE'				),
-		('MODIFIER_MECH_ELITE_FASTER_BUILD_WITH_FABRIK',		'Amount',					25												),
+		-- 30% production bonus for this unit
+		('MODIFIER_STAHLPRAKTIKANTEN_FASTER_BUILD_WITH_FABRIK',	'UnitType',					'UNIT_DEVRIM_STAHLPRAKTIKANTEN'					),
+		('MODIFIER_STAHLPRAKTIKANTEN_FASTER_BUILD_WITH_FABRIK',	'Amount',					30												),
 		-- +5 Science on kill
-		('MODIFIER_MECH_ELITE_SCIENCE_ON_KILL',					'YieldType',				'YIELD_SCIENCE'									),
-		('MODIFIER_MECH_ELITE_SCIENCE_ON_KILL',					'Amount',					5												),
-		-- Combat bonus (+3 base representing mine synergy)
-		('MODIFIER_MECH_ELITE_MINE_COMBAT_BONUS',				'Amount',					3												);
+		('MODIFIER_STAHLPRAKTIKANTEN_SCIENCE_ON_KILL',			'YieldType',				'YIELD_SCIENCE'									),
+		('MODIFIER_STAHLPRAKTIKANTEN_SCIENCE_ON_KILL',			'Amount',					5												),
+		-- Combat bonus (+6 representing industrial synergy)
+		('MODIFIER_STAHLPRAKTIKANTEN_MINE_COMBAT_BONUS',		'Amount',					6												);
 
 -----------------------------------------------
 -- RequirementSets for Unit
@@ -261,6 +259,6 @@ VALUES	('REQ_DEVRIM_CITY_HAS_QUANTUM_FABRIK', 				'BuildingType',				'BUILDING_D
 -----------------------------------------------
 
 INSERT INTO ModifierStrings
-		(ModifierId,									Context,		Text											)
-VALUES	('MODIFIER_MECH_ELITE_MINE_COMBAT_BONUS',		'Preview',		'LOC_ABILITY_DEVRIM_MECHANISIERTE_ELITE'		),
-		('MODIFIER_MECH_ELITE_SCIENCE_ON_KILL',			'Preview',		'LOC_ABILITY_DEVRIM_MECH_ELITE_SCIENCE_KILL'	);
+		(ModifierId,										Context,		Text												)
+VALUES	('MODIFIER_STAHLPRAKTIKANTEN_MINE_COMBAT_BONUS',	'Preview',		'LOC_ABILITY_DEVRIM_STAHLPRAKTIKANTEN'				),
+		('MODIFIER_STAHLPRAKTIKANTEN_SCIENCE_ON_KILL',		'Preview',		'LOC_ABILITY_DEVRIM_STAHLPRAKTIKANTEN_SCIENCE_KILL'	);

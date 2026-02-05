@@ -2,7 +2,7 @@
 	Leader Unique Ability - Industrial Vision
 	Authors: Devrim
 	
-	Leader ability for Devrim der Visionär
+	Leader ability for Devrim Schichtleiter
 	Note: Most of the civilization abilities are already defined in Civilization_UA.sql
 	This file adds any leader-specific bonuses
 */
@@ -35,7 +35,7 @@ VALUES	('TRAIT_LEADER_DEVRIM_INDUSTRIAL_VISION',	'LOC_TRAIT_LEADER_DEVRIM_INDUST
 
 INSERT INTO	LeaderTraits
 		(LeaderType,					TraitType									)
-VALUES	('LEADER_DEVRIM_DER_VISIONAER',	'TRAIT_LEADER_DEVRIM_INDUSTRIAL_VISION'		);
+VALUES	('LEADER_DEVRIM_SCHICHTLEITER',	'TRAIT_LEADER_DEVRIM_INDUSTRIAL_VISION'		);
 
 -----------------------------------------------
 -- TraitModifiers

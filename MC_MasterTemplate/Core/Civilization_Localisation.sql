@@ -22,47 +22,47 @@ VALUES
 	('en_US',	'LOC_CIVILIZATION_DEVRIM_MINISTERIUM_ADJECTIVE',  	'Ministerial'											),
 	
 -----------------------------------------------
--- Civilization Unique Ability - Maschinengeist
+-- Civilization Unique Ability - Vertrauen ist gut, Produktion ist besser
 -----------------------------------------------
 
-	('en_US',	'LOC_TRAIT_CIVILIZATION_DEVRIM_MASCHINENGEIST_NAME',				'Maschinengeist'						),
+	('en_US',	'LOC_TRAIT_CIVILIZATION_DEVRIM_MASCHINENGEIST_NAME',				'Vertrauen ist gut, Produktion ist besser'	),
 	('en_US',	'LOC_TRAIT_CIVILIZATION_DEVRIM_MASCHINENGEIST_DESCRIPTION',	
-	'[ICON_Mine] Mines in cities with a [ICON_DISTRICT_CAMPUS] Campus provide +1 [ICON_Science] Science. Domestic [ICON_TradeRoute] Trade Routes to cities with a [ICON_DISTRICT_CAMPUS] Campus or [ICON_Building] Factory provide +2 [ICON_Production] Production and +1 [ICON_Science] Science.'	),
+	'Cities with a Das Ding, wo alles rauskommt and a [ICON_DISTRICT_CAMPUS] Campus receive +10% [ICON_Production] Production. [ICON_Mine] Mines in cities with a [ICON_DISTRICT_CAMPUS] Campus provide +1 [ICON_Science] Science. Domestic [ICON_TradeRoute] Trade Routes to cities with a [ICON_DISTRICT_CAMPUS] Campus or [ICON_Building] Factory provide +2 [ICON_Production] Production and +1 [ICON_Science] Science.'	),
 
 -----------------------------------------------
--- Civilization Trait - Produktionsfluss
+-- Civilization Trait - Irgendwer optimiert das
 -----------------------------------------------
 
-	('en_US',	'LOC_TRAIT_CIVILIZATION_DEVRIM_PRODUKTIONSFLUSS_NAME',			'Produktionsfluss'						),
+	('en_US',	'LOC_TRAIT_CIVILIZATION_DEVRIM_PRODUKTIONSFLUSS_NAME',			'Irgendwer optimiert das'					),
 	('en_US',	'LOC_TRAIT_CIVILIZATION_DEVRIM_PRODUKTIONSFLUSS_DESCRIPTION',
-	'Cities with a Quantum-Fabrik retain 20% of their [ICON_Production] Production when completing units, projects, or wonders. Cities with both a Quantum-Fabrik and a [ICON_DISTRICT_CAMPUS] Campus receive +10% [ICON_Production] Production.'	),
+	'Cities with a Das Ding, wo alles rauskommt retain 20% of their [ICON_Production] Production when completing units, projects, or wonders. Cities with both the unique building and a [ICON_DISTRICT_CAMPUS] Campus receive +10% [ICON_Production] Production.'	),
 
 -----------------------------------------------
--- Secondary Bonus - Finanzintegration
+-- Secondary Bonus - Das regelt der Markt schon
 -----------------------------------------------
 
-	('en_US',	'LOC_TRAIT_CIVILIZATION_DEVRIM_FINANZINTEGRATION_NAME',			'Finanzintegration'						),
+	('en_US',	'LOC_TRAIT_CIVILIZATION_DEVRIM_FINANZINTEGRATION_NAME',			'Das regelt der Markt schon'				),
 	('en_US',	'LOC_TRAIT_CIVILIZATION_DEVRIM_FINANZINTEGRATION_DESCRIPTION',
 	'[ICON_Building] Markets and Banks in cities with an [ICON_DISTRICT_INDUSTRIAL_ZONE] Industrial Zone provide +1 [ICON_Production] Production. [ICON_TradeRoute] Trade Routes to cities with a [ICON_Building] Market provide +1 [ICON_Gold] Gold.'	),
 
 -----------------------------------------------
--- Unique Building - Quantum-Fabrik
+-- Unique Building - Das Ding, wo alles rauskommt
 -----------------------------------------------
 
-	('en_US',	'LOC_BUILDING_DEVRIM_QUANTUM_FABRIK_NAME',				'Quantum-Fabrik'						),
+	('en_US',	'LOC_BUILDING_DEVRIM_QUANTUM_FABRIK_NAME',				'Das Ding, wo alles rauskommt'				),
 	('en_US',	'LOC_BUILDING_DEVRIM_QUANTUM_FABRIK_DESCRIPTION',
 	'A building unique to Devrims Ministerium. Replaces the Factory.[NEWLINE][NEWLINE]+4 [ICON_Production] Production[NEWLINE]+3 [ICON_Science] Science if adjacent to a [ICON_DISTRICT_CAMPUS] Campus[NEWLINE]+2 [ICON_Gold] Gold per [ICON_Mine] Mine in this city[NEWLINE][ICON_TradeRoute] Trade Routes from this city provide +1 [ICON_Production] Production[NEWLINE]This city retains 20% [ICON_Production] Production overflow[NEWLINE]+10% [ICON_Production] Production if city has a [ICON_DISTRICT_CAMPUS] Campus'	),
 
 -----------------------------------------------
--- Unique Unit - Mechanisierte Elite
+-- Unique Unit - Die Stahlpraktikanten
 -----------------------------------------------
 
-	('en_US',	'LOC_UNIT_DEVRIM_MECHANISIERTE_ELITE_NAME',	'Mechanisierte Elite'	),
-	('en_US',	'LOC_UNIT_DEVRIM_MECHANISIERTE_ELITE_DESCRIPTION',	 
-	'An elite industrial warfare unit unique to Devrims Ministerium. Replaces Pike and Shot.[NEWLINE][NEWLINE]Built 25% faster in cities with a Quantum-Fabrik. Gains +3 [ICON_Strength] Combat Strength bonus representing industrial synergy. Defeating an enemy unit grants +5 [ICON_Science] Science to the city.'	),
+	('en_US',	'LOC_UNIT_DEVRIM_STAHLPRAKTIKANTEN_NAME',	'Die Stahlpraktikanten'	),
+	('en_US',	'LOC_UNIT_DEVRIM_STAHLPRAKTIKANTEN_DESCRIPTION',	 
+	'An elite industrial warfare unit unique to Devrims Ministerium. Replaces Infantry.[NEWLINE][NEWLINE]Built 30% faster in cities with Das Ding, wo alles rauskommt. Gains +6 [ICON_Strength] Combat Strength bonus from industrial synergy. Defeating an enemy unit grants +5 [ICON_Science] Science to the city.'	),
 
-	('en_US',	'LOC_ABILITY_DEVRIM_MECHANISIERTE_ELITE',  '+3 [ICON_Strength] Combat Strength from industrial synergy.'	),
-	('en_US',	'LOC_ABILITY_DEVRIM_MECH_ELITE_SCIENCE_KILL',  '+5 [ICON_Science] Science when defeating an enemy unit.'	),
+	('en_US',	'LOC_ABILITY_DEVRIM_STAHLPRAKTIKANTEN',  '+6 [ICON_Strength] Combat Strength from industrial synergy.'	),
+	('en_US',	'LOC_ABILITY_DEVRIM_STAHLPRAKTIKANTEN_SCIENCE_KILL',  '+5 [ICON_Science] Science when defeating an enemy unit.'	),
 
 -----------------------------------------------
 -- Mountains
@@ -133,19 +133,19 @@ VALUES
 	('en_US',	'LOC_PEDIA_CIVILIZATIONS_PAGE_CIVILIZATION_DEVRIM_MINISTERIUM_CHAPTER_HISTORY_PARA_2',		
 	'The Ministry of More Production represents an industrial utopia where knowledge flows like electricity through gears and factories. Those who plan wisely master production, research, and trade.'),	
 	('en_US',	'LOC_PEDIA_CIVILIZATIONS_PAGE_CIVILIZATION_DEVRIM_MINISTERIUM_CHAPTER_HISTORY_PARA_3',	
-	'The civilization emphasizes synergies between industry, science, and trade routes. The Quantum-Fabrik serves as the cornerstone of this philosophy, connecting industrial output with scientific advancement and commercial prosperity.'),
+	'The civilization emphasizes synergies between industry, science, and trade routes. Das Ding, wo alles rauskommt serves as the cornerstone of this philosophy, connecting industrial output with scientific advancement and commercial prosperity.'),
 
 -----------------------------------------------
 -- Unique Building Civilopedia Entry
 -----------------------------------------------
 
 	('en_US',	'LOC_PEDIA_BUILDINGS_PAGE_BUILDING_DEVRIM_QUANTUM_FABRIK_CHAPTER_HISTORY_PARA_1',  	
-	'The Quantum-Fabrik represents the pinnacle of industrial-scientific integration. This revolutionary building combines advanced manufacturing with quantum research principles, creating synergies that boost both production and scientific output.'	),
+	'Das Ding, wo alles rauskommt represents the pinnacle of industrial-scientific integration. This revolutionary building combines advanced manufacturing with quantum research principles, creating synergies that boost both production and scientific output.'	),
 
 -----------------------------------------------
 -- Unique Unit Civilopedia Entry
 -----------------------------------------------
 
-	('en_US',	'LOC_PEDIA_UNITS_PAGE_UNIT_DEVRIM_MECHANISIERTE_ELITE_CHAPTER_HISTORY_PARA_1',  	
-	'The Mechanisierte Elite represents the ultimate fusion of industrial might and military prowess. These elite soldiers are trained in cities with advanced Quantum-Fabrik facilities, where they learn to harness the power of mechanized warfare. Each victory contributes to the scientific advancement of their home city.'	);
+	('en_US',	'LOC_PEDIA_UNITS_PAGE_UNIT_DEVRIM_STAHLPRAKTIKANTEN_CHAPTER_HISTORY_PARA_1',  	
+	'Die Stahlpraktikanten represent the ultimate fusion of industrial might and military prowess. These elite soldiers are trained in cities with Das Ding, wo alles rauskommt, where they learn to harness the power of mechanized warfare. Each victory contributes to the scientific advancement of their home city.'	);
 

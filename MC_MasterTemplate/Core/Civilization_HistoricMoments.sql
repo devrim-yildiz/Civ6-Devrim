@@ -10,5 +10,5 @@
 -----------------------------------------------
 INSERT INTO MomentIllustrations
 		(MomentIllustrationType,					MomentDataType,					GameDataType,								Texture									)
-VALUES	('MOMENT_ILLUSTRATION_UNIQUE_UNIT',			'MOMENT_DATA_UNIT',				'UNIT_DEVRIM_MECHANISIERTE_ELITE',			'MechanisierteEliteHistoricMoment.dds'	),
+VALUES	('MOMENT_ILLUSTRATION_UNIQUE_UNIT',			'MOMENT_DATA_UNIT',				'UNIT_DEVRIM_STAHLPRAKTIKANTEN',			'StahlpraktikantenHistoricMoment.dds'	),
 		('MOMENT_ILLUSTRATION_UNIQUE_BUILDING',		'MOMENT_DATA_BUILDING',			'BUILDING_DEVRIM_QUANTUM_FABRIK',			'QuantumFabrikHistoricMoment.dds'		);

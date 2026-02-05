@@ -12,7 +12,7 @@
 
 INSERT INTO LoadingInfo
 			(LeaderType,					ForegroundImage,					BackgroundImage,						PlayDawnOfManAudio	)
-VALUES		('LEADER_DEVRIM_DER_VISIONAER',	'LEADER_MC_PO_NGBE_NEUTRAL',		'LEADER_MC_PO_NGBE_BACKGROUND',			0					);
+VALUES		('LEADER_DEVRIM_SCHICHTLEITER',	'LEADER_MC_PO_NGBE_NEUTRAL',		'LEADER_MC_PO_NGBE_BACKGROUND',			0					);
 
 --------------------------------------------------------------------------------------------------------------------------		
 -- Background Art
@@ -22,4 +22,4 @@ VALUES		('LEADER_DEVRIM_DER_VISIONAER',	'LEADER_MC_PO_NGBE_NEUTRAL',		'LEADER_MC
 --------------------------------------------------------------------------------------------------------------------------			
 INSERT INTO DiplomacyInfo			
 			(Type,							BackgroundImage					)
-VALUES		('LEADER_DEVRIM_DER_VISIONAER',	'LEADER_PO_NGBE_DIPLO_BG'		);
+VALUES		('LEADER_DEVRIM_SCHICHTLEITER',	'LEADER_PO_NGBE_DIPLO_BG'		);
