@@ -6,10 +6,9 @@
 	
 	Abilities:
 	- Built 30% faster in cities with Quantum-Fabrik
-	- After completion: City receives +20 Production (instant)
-	- +1 Combat Strength per Mine improvement in the city (max +6)
+	- After completion: City receives +20 Production (instant) - NOTE: Simplified in implementation
+	- +6 Combat Strength bonus (representing industrial synergy)
 	- Defeating a unit grants +5 Science to the city
-	- Trade routes from the city give +1 Production for 3 turns (simplified to permanent bonus)
 */
 
 -----------------------------------------------
@@ -171,9 +170,8 @@ VALUES	('ABILITY_DEVRIM_STAHLPRAKTIKANTEN',	'LOC_UNIT_DEVRIM_STAHLPRAKTIKANTEN_N
 -- Modifiers for Unit
 
 -- 1. Built 30% faster in cities with Quantum-Fabrik (via production modifier)
--- 2. Combat bonuses from mines (+1 per mine, max +6)
+-- 2. Combat bonus (+6 representing industrial synergy)
 -- 3. +5 Science when defeating a unit
--- Note: The +20 Production on completion and trade route boost are simplified
 -----------------------------------------------
 
 -- TraitModifiers for civilization-wide effects
@@ -189,7 +187,7 @@ INSERT INTO UnitAbilityModifiers
 VALUES	
 		-- +5 Science to city when defeating enemy
 		('ABILITY_DEVRIM_STAHLPRAKTIKANTEN',	'MODIFIER_STAHLPRAKTIKANTEN_SCIENCE_ON_KILL'		),
-		-- Combat strength bonus representing mine synergy (simplified as flat bonus)
+		-- Combat strength bonus (+6 representing industrial synergy)
 		('ABILITY_DEVRIM_STAHLPRAKTIKANTEN',	'MODIFIER_STAHLPRAKTIKANTEN_MINE_COMBAT_BONUS'		);
 
 -----------------------------------------------
@@ -203,7 +201,7 @@ VALUES
 		('MODIFIER_STAHLPRAKTIKANTEN_FASTER_BUILD_WITH_FABRIK',	'MODIFIER_PLAYER_CITIES_ADJUST_UNIT_PRODUCTION',			'REQSET_DEVRIM_CITY_HAS_QUANTUM_FABRIK'		),
 		-- +5 Science on kill
 		('MODIFIER_STAHLPRAKTIKANTEN_SCIENCE_ON_KILL',			'MODIFIER_UNIT_ADJUST_POST_COMBAT_YIELD',					null										),
-		-- Combat bonus (max +6, representing mine synergy)
+		-- Combat bonus (+6 representing industrial synergy)
 		('MODIFIER_STAHLPRAKTIKANTEN_MINE_COMBAT_BONUS',		'MODIFIER_UNIT_ADJUST_COMBAT_STRENGTH',						null										);
 
 -----------------------------------------------
@@ -219,7 +217,7 @@ VALUES
 		-- +5 Science on kill
 		('MODIFIER_STAHLPRAKTIKANTEN_SCIENCE_ON_KILL',			'YieldType',				'YIELD_SCIENCE'									),
 		('MODIFIER_STAHLPRAKTIKANTEN_SCIENCE_ON_KILL',			'Amount',					5												),
-		-- Combat bonus (max +6 representing mine synergy)
+		-- Combat bonus (+6 representing industrial synergy)
 		('MODIFIER_STAHLPRAKTIKANTEN_MINE_COMBAT_BONUS',		'Amount',					6												);
 
 -----------------------------------------------

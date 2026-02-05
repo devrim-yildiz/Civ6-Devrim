@@ -59,9 +59,9 @@ VALUES
 
 	('en_US',	'LOC_UNIT_DEVRIM_STAHLPRAKTIKANTEN_NAME',	'Die Stahlpraktikanten'	),
 	('en_US',	'LOC_UNIT_DEVRIM_STAHLPRAKTIKANTEN_DESCRIPTION',	 
-	'An elite industrial warfare unit unique to Devrims Ministerium. Replaces Infantry.[NEWLINE][NEWLINE]Built 30% faster in cities with Das Ding, wo alles rauskommt. Gains +6 [ICON_Strength] Combat Strength bonus from industrial synergy (mines). Defeating an enemy unit grants +5 [ICON_Science] Science to the city.'	),
+	'An elite industrial warfare unit unique to Devrims Ministerium. Replaces Infantry.[NEWLINE][NEWLINE]Built 30% faster in cities with Das Ding, wo alles rauskommt. Gains +6 [ICON_Strength] Combat Strength bonus from industrial synergy. Defeating an enemy unit grants +5 [ICON_Science] Science to the city.'	),
 
-	('en_US',	'LOC_ABILITY_DEVRIM_STAHLPRAKTIKANTEN',  '+6 [ICON_Strength] Combat Strength from industrial synergy (mines in city, max +6).'	),
+	('en_US',	'LOC_ABILITY_DEVRIM_STAHLPRAKTIKANTEN',  '+6 [ICON_Strength] Combat Strength from industrial synergy.'	),
 	('en_US',	'LOC_ABILITY_DEVRIM_STAHLPRAKTIKANTEN_SCIENCE_KILL',  '+5 [ICON_Science] Science when defeating an enemy unit.'	),
 
 -----------------------------------------------
