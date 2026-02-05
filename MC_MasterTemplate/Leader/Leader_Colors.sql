@@ -11,7 +11,7 @@
 
 INSERT INTO	PlayerColors (Type, Usage, PrimaryColor, SecondaryColor, Alt1PrimaryColor, Alt1SecondaryColor, Alt2PrimaryColor, Alt2SecondaryColor, Alt3PrimaryColor, Alt3SecondaryColor )
 VALUES	(
-		'LEADER_DEVRIM_DER_VISIONAER', -- Type
+		'LEADER_DEVRIM_SCHICHTLEITER', -- Type
 		'Unique', -- Usage
 		'COLOR_DEVRIM_MINISTERIUM_A_PRIMARY', -- PrimaryColor
 		'COLOR_DEVRIM_MINISTERIUM_A_SECONDARY', -- SecondaryColor

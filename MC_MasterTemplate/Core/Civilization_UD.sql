@@ -1,5 +1,5 @@
 /*
-	Civilization Unique Building - Quantum-Fabrik
+	Civilization Unique Building - Das Ding, wo alles rauskommt
 	Authors: Devrim
 	
 	Replaces Factory (BUILDING_FACTORY)
@@ -9,8 +9,8 @@
 	- +3 Science when adjacent to Campus
 	- +2 Gold per Mine in the city
 	- Trade routes from this city give +1 Production
-	- Cities with Quantum-Fabrik keep 20% production after completing units/projects/wonders
-	- Cities with Quantum-Fabrik + Campus get +10% Production
+	- Cities with this building keep 20% production after completing units/projects/wonders
+	- Cities with this building + Campus get +10% Production
 */
 
 -----------------------------------------------
