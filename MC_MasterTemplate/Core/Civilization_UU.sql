@@ -148,11 +148,14 @@ WHERE 	UnitType = 'UNIT_PIKE_AND_SHOT';
 -- UnitReplaces
 
 -- Mechanisierte Elite replaces Pike and Shot
+-- Use INSERT...SELECT to ensure UnitReplaces only inserts if UNIT_PIKE_AND_SHOT exists
 -----------------------------------------------
 		
 INSERT INTO UnitReplaces
 		(CivUniqueUnitType,						ReplacesUnitType		)
-VALUES	('UNIT_DEVRIM_MECHANISIERTE_ELITE',		'UNIT_PIKE_AND_SHOT'	);
+SELECT	'UNIT_DEVRIM_MECHANISIERTE_ELITE',		'UNIT_PIKE_AND_SHOT'
+WHERE EXISTS (SELECT 1 FROM Units WHERE UnitType = 'UNIT_PIKE_AND_SHOT')
+  AND EXISTS (SELECT 1 FROM Units WHERE UnitType = 'UNIT_DEVRIM_MECHANISIERTE_ELITE');
 
 -----------------------------------------------
 -- UnitAbilities
